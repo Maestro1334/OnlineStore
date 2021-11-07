@@ -10,5 +10,6 @@ namespace Domain
         public List<Product> Products { get; set; }
         public Address Address { get; set; }
         public DateTime DateTimeOrdered { get; set; }
+        public DateTime ShippingDate { get; set; }
     }
 }
