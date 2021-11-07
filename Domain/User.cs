@@ -1,4 +1,4 @@
-﻿using Domain.enums;
+﻿using Domain.Enum;
 using System;
 
 namespace Domain

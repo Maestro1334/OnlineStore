@@ -3,13 +3,13 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Domain;
-using Domain.enums;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Webshop.DTO;
 using Service;
+using Domain.Enum;
 
 namespace Webshop
 {

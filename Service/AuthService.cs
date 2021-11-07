@@ -8,9 +8,10 @@ using JWT;
 using JWT.Serializers;
 using System.Linq;
 using System.Collections.Generic;
-using Domain.enums;
 using JWT.Builder;
 using JWT.Exceptions;
+using Domain.Enum;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
