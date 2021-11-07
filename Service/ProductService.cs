@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DAL;
 using Domain;
+using HttpMultipartParser;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Service
 {
@@ -14,6 +17,7 @@ namespace Service
         public Task AddProduct(Product product);
         public Task UpdateProductById(Guid id, Product updatedProduct);
         public Task DeleteProductById(Guid id);
+        public Task<string> AddImageToProduct(FilePart image);
     }
 
     public class ProductService : IProductService
@@ -52,6 +56,27 @@ namespace Service
         {
             _context.Products.Remove(new Product { Id = id });
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<string> AddImageToProduct(FilePart image)
+        {
+            if (CloudStorageAccount.TryParse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"), out CloudStorageAccount storageAccount))
+            {
+                CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("images");
+
+                CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(image.FileName);
+                await cloudBlockBlob.UploadFromStreamAsync(image.Data);
+                return cloudBlockBlob.Uri.AbsoluteUri;
+            }
+            else
+            {
+                Console.WriteLine(
+                    "A connection string has not been defined in the system environment variables. " +
+                    "Add an environment variable named 'AZURE_STORAGE_CONNECTION_STRING' with your storage " +
+                    "connection string as a value.");
+                return null;
+            }
         }
     }
 

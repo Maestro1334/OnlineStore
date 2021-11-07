@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Enum;
+using HttpMultipartParser;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Newtonsoft.Json;
@@ -186,6 +187,47 @@ namespace OnlineStore.Controllers
                 }
 
                 response.StatusCode = HttpStatusCode.OK;
+                return response;
+            });
+        }
+
+        [Function(nameof(ProductHttpTrigger.AddImageToProductAsync))]
+        public async Task<HttpResponseData> AddImageToProductAsync(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "products/image")] HttpRequestData req,
+            FunctionContext executionContext)
+        {
+            return await ExecuteForAdmin(req, executionContext, async (UserType userType) =>
+            {
+                HttpResponseData response = req.CreateResponse();
+
+                var parsedFormBody = MultipartFormDataParser.ParseAsync(req.Body);
+                FilePart file = parsedFormBody.Result.Files[0];
+                if (file == null)
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.WriteString("You need to add an image to the form data.");
+                    return response;
+                }
+
+                if (!file.FileName.EndsWith(".jpg") && !file.FileName.EndsWith(".png"))
+                {
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.WriteString("Image needs to be of .jpg or .png format.");
+                    return response;
+                }
+
+                try
+                {
+                    string imageUrl = await _productService.AddImageToProduct(file);
+                    response.WriteString(imageUrl);
+                }
+                catch (Microsoft.Azure.Cosmos.CosmosException ex)
+                {
+                    response.StatusCode = ex.StatusCode;
+                    return response;
+                }
+
+                response.StatusCode = HttpStatusCode.Created;
                 return response;
             });
         }

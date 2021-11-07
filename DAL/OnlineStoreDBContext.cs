@@ -2,6 +2,8 @@
 using System;
 using Domain;
 using DAL.Configurations;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace DAL
 {
@@ -27,6 +29,34 @@ namespace DAL
             modelBuilder.ApplyConfiguration(new ProductConfiguration());            
             modelBuilder.ApplyConfiguration(new OrderConfiguration());            
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+
+            CreateImagesBlobContainer();
+        }
+
+        private static async void CreateImagesBlobContainer()
+        {
+            if (CloudStorageAccount.TryParse(Environment.GetEnvironmentVariable("AzureWebJobsStorage"), out CloudStorageAccount storageAccount))
+            {
+                CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+                CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference("images");
+                if (!await cloudBlobContainer.ExistsAsync())
+                {
+                    await cloudBlobContainer.CreateAsync();
+
+                    BlobContainerPermissions permissions = new()
+                    {
+                        PublicAccess = BlobContainerPublicAccessType.Blob
+                    };
+                    await cloudBlobContainer.SetPermissionsAsync(permissions);
+                }
+            }
+            else
+            {
+                Console.WriteLine(
+                    "A connection string has not been defined in the system environment variables. " +
+                    "Add an environment variable named 'AZURE_STORAGE_CONNECTION_STRING' with your storage " +
+                    "connection string as a value.");
+            }
         }
     }
 }
