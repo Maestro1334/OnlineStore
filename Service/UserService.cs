@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DAL;
 using Domain;
+using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace Service
@@ -37,7 +38,7 @@ namespace Service
 
         public async Task AddUser(User user)
         {
-            user.UserType = Domain.enums.UserType.User;
+            user.UserType = UserType.User;
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }

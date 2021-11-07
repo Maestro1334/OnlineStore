@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Domain.enums;
+using Domain.Enum;
 using JWT.Algorithms;
 using JWT.Builder;
 using JWT.Exceptions;
