@@ -1,4 +1,4 @@
-﻿using Domain.enums;
+﻿using Domain.Enum;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System;

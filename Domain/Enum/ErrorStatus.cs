@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Converters;
 using System.Text.Json.Serialization;
 
-namespace Domain.enums
+namespace Domain.Enum
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum ErrorStatus

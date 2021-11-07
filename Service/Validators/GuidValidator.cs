@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service.Helpers
+namespace Service.Validators
 {
     public class GuidValidator
     {
