@@ -4,18 +4,10 @@ using System.Threading.Tasks;
 using DAL;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Service.Interfaces;
 
-namespace Service
+namespace Service.Services
 {
-    public interface IReviewService
-    {
-        public Task<List<Review>> GetReviews();
-        public Task<Review> GetReviewById(Guid id);
-        public Task AddReview(Review review);
-        public Task UpdateReviewById(Guid id, Review updatedReview);
-        public Task DeleteReviewById(Guid id);
-    }
-
     public class ReviewService : IReviewService
     {
         private readonly OnlineStoreDBContext _context;

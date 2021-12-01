@@ -12,21 +12,10 @@ using JWT.Builder;
 using JWT.Exceptions;
 using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
+using Service.Interfaces;
 
-namespace Service
+namespace Service.Services
 {
-    public interface IAuthService
-    {
-        public User GetUserByUsernamePassword(string username, string password);
-        public Task<RefreshToken> GetRefreshTokenByToken(string token);
-        public Task<RefreshToken> GetRefreshTokenByUserId(Guid userId);
-        public Task AddRefreshToken(RefreshToken token);
-        public Task RemoveRefreshToken(RefreshToken token);
-        public Task<AuthToken> CreateAuthToken(User user);
-        public bool VerifyRefreshToken(HttpRequestData request, out Guid userId, out ErrorStatus errorStatus, out string refreshToken);
-        public bool GetTokenFromHeader(HttpRequestData request, out string token);
-    }
-
     public class AuthService : IAuthService
     {
         private readonly OnlineStoreDBContext _context;

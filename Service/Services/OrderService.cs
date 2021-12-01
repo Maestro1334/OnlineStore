@@ -4,18 +4,10 @@ using System.Threading.Tasks;
 using DAL;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Service.Interfaces;
 
-namespace Service
+namespace Service.Services
 {
-    public interface IOrderService
-    {
-        public Task<List<Order>> GetOrders();
-        public Task<Order> GetOrderById(Guid id);
-        public Task AddOrder(Order order);
-        public Task UpdateOrderById(Guid id, Order updatedOrder);
-        public Task DeleteOrderById(Guid id);
-    }
-
     public class OrderService : IOrderService
     {
         private readonly OnlineStoreDBContext _context;

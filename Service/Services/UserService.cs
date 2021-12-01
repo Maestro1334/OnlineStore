@@ -5,18 +5,10 @@ using DAL;
 using Domain;
 using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
+using Service.Interfaces;
 
-namespace Service
+namespace Service.Services
 {
-    public interface IUserService
-    {
-        public Task<List<User>> GetUsers();
-        public Task<User> GetUserById(Guid id);
-        public Task AddUser(User user);
-        public Task UpdateUserById(Guid id, User updatedUser);
-        public Task DeleteUserById(Guid id);
-    }
-
     public class UserService : IUserService
     {
         private readonly OnlineStoreDBContext _context;
