@@ -9,7 +9,7 @@ using HttpMultipartParser;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Newtonsoft.Json;
-using Service;
+using Service.Interfaces;
 using Service.Validators;
 using Webshop.Security;
 

@@ -8,8 +8,8 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Webshop.DTO;
-using Service;
 using Domain.Enum;
+using Service.Interfaces;
 
 namespace Webshop
 {

@@ -3,7 +3,8 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Extensions.OpenApi.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Service;
+using Service.Services;
+using Service.Interfaces;
 using System.Threading.Tasks;
 using Webshop.Middleware;
 

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using Service.Validators;
 using Webshop.Security;
 using Service;
+using Service.Interfaces;
 
 namespace OnlineStore.Controllers
 {
