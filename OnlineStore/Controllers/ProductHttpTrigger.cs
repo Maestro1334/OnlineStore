@@ -191,8 +191,9 @@ namespace OnlineStore.Controllers
             });
         }
 
-        [Function(nameof(ProductHttpTrigger.AddImageToProductAsync))]
-        public async Task<HttpResponseData> AddImageToProductAsync(
+        // Upload image as form data to this endpoint, then use returned URL for ADD or UPDATE product "imageurl"
+        [Function(nameof(ProductHttpTrigger.AddProductImageAsync))]
+        public async Task<HttpResponseData> AddProductImageAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "products/image")] HttpRequestData req,
             FunctionContext executionContext)
         {
